@@ -1,16 +1,11 @@
 class ActivitiesController < ApplicationController
-  rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity
+    rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity
     rescue_from ActiveRecord::RecordNotFound, with: :record_notfound_method
-    # rescue_from ActiveRecord::ForbiddenAttributesError, with: :render_unprocessable_entity
+
     def index
       activities = Activity.all
       render json: activities
     end
-
-    # def show
-    #   activity = Activity.find(params[:id])
-    #   render json: activity
-    # end
 
     def create
       activity = Activity.create!(activity_params)
@@ -19,17 +14,13 @@ class ActivitiesController < ApplicationController
 
     def destroy
       activity = find_activity
-      if activity
         activity.destroy!
         render status: :no_content
-      else
-        render json: {error: "Activity not found" }, status: :not_found
-      end
     end
     
     private
     def find_activity
-        activity = Activity.find_by(id: params[:id])
+        activity = Activity.find_by!(id: params[:id])
     end
 
     def activity_params

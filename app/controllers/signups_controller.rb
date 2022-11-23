@@ -6,11 +6,6 @@ class SignupsController < ApplicationController
         render json: Signup.all
     end
 
-    # def show
-    #     signup = find_signup
-    #     render json: signup
-    # end
-
     def create
         signup = Signup.create!(signup_params)
         render json: signup, include: ["activity"], status: :created
@@ -20,8 +15,6 @@ class SignupsController < ApplicationController
         signup = find_signup
         signup.update!(signup_params)
         render json: signup, status: :created
-        # , include: ["activity.id","activity.name","activity.difficulty"]
-        # render json: {id: signup[:id],camper_id: signup[:camper_id], name:signup[:activity_id], activity: signup[:activity]}, status: :accepted
     end
 
     private
